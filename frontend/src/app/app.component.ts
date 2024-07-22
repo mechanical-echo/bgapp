@@ -9,42 +9,12 @@ import { PlaylistComponent } from './components/playlist/playlist.component';
 import { WaveComponent } from './components/wave/wave.component';
 import { TimeComponent } from './components/time/time.component';
 import { MaxwellComponent } from './components/maxwell/maxwell.component';
-
-interface WeatherResponse {
-  location: Location;
-  current: Current;
-}
-
-interface Location {
-  name: string;
-  region: string;
-  country: string;
-  lat: number;
-  lon: number;
-  tz_id: string;
-  localtime_epoch: number;
-  localtime: string;
-}
-
-interface Current {
-  temp_c: number;
-  temp_f: number;
-  is_day: number;
-  condition: Condition;
-  humidity: number;
-  last_updated: string;
-}
-
-interface Condition {
-  text: string;
-  icon: string;
-  code: number;
-}
+import { WeatherComponent } from './components/weather/weather.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, PlaylistComponent, WaveComponent, TimeComponent, MaxwellComponent],
+  imports: [RouterOutlet, CommonModule, PlaylistComponent, WaveComponent, TimeComponent, MaxwellComponent, WeatherComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [
@@ -54,18 +24,6 @@ interface Condition {
         animate('300ms cubic-bezier(.4,-0.33,.05,1.6)', style({ opacity: 1, transform: 'translateY(0)' }))
       ])
     ]),
-    trigger('pressAnimation', [
-      state('unpressed', style({
-        transform: 'scale(1)'
-      })),
-      state('pressed', style({
-        transform: 'scale(0.95)'
-      })),
-      transition('unpressed <=> pressed', [
-        animate('100ms ease-in-out')
-      ])
-    ]),
-    
   ]
 })
 export class AppComponent implements OnInit {
@@ -76,7 +34,7 @@ export class AppComponent implements OnInit {
   private themeInterval: any;
   
   ngOnInit(): void {
-    this.getWeather();
+    
     this.setTimeOfDayBasedOnRealTime();
 
     this.themeInterval = setInterval(() => {
@@ -96,9 +54,6 @@ export class AppComponent implements OnInit {
   weatherIcons = weatherIcons;
   timeOfTheDay = 0;
   
-
-  weather?: WeatherResponse;
-  
   changeTime(x: number) {
     this.timeOfTheDay = x;
     
@@ -112,28 +67,7 @@ export class AppComponent implements OnInit {
     document.documentElement.setAttribute('data-theme', theme);
   }
 
-  getWeather(): void {
-    this.http.get<WeatherResponse>('http://api.weatherapi.com/v1/current.json?key=ec2f9a25251c41158a973452241807&q=56.5385,21.0538')
-      .subscribe({
-        next: (res: WeatherResponse) => {
-          this.weather = res;
-          console.log(res);
-        },
-        error: (err) => {
-          console.error('Error fetching weather data:', err);
-        }
-      });
-  }
-
-  isPressedState = 'unpressed';
-
-  onWeatherPress() {
-    this.isPressedState = 'pressed';
-    setTimeout(() => {
-      this.isPressedState = 'unpressed';
-      this.getWeather();
-    }, 100);
-  }
+  
 
   setTimeOfDayBasedOnRealTime(): void {
     const currentHour = new Date().getHours();

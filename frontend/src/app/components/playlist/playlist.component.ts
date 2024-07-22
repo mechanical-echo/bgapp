@@ -52,14 +52,16 @@ export class PlaylistComponent implements OnInit {
   
   constructor (private songService: SongService, private _elementRef : ElementRef) {};
 
-  songs: any[] = [];
-  ssDuration = 0;
-  ssSliderPoint = 0;
-  ss?: any;
-  isPlaying = false;
   isPlayPressed = 'unpressed';
   isNextPressed = 'unpressed';
   isBackPressed = 'unpressed';
+  
+  songs: any[] = [];
+  isPlaying = false;
+  
+  ssSliderPoint = 0;
+  ssDuration = 0;
+  ss?: any;
 
   ngOnInit(): void {
     this.songService.getSongs().subscribe(
@@ -123,6 +125,7 @@ export class PlaylistComponent implements OnInit {
       audio.currentTime = event.target.value;
     }
   }
+  
   play() {
     if(this.ss == undefined){
       this.selectSong(0)
@@ -137,6 +140,7 @@ export class PlaylistComponent implements OnInit {
       this.isPlayPressed = 'unpressed';
     }, 100);
   }
+  
   next(){
     if(this.songs.indexOf(this.ss)+1 == this.songs.length){
       this.selectSong(0)
@@ -148,6 +152,7 @@ export class PlaylistComponent implements OnInit {
       this.isNextPressed = 'unpressed';
     }, 100);
   }
+  
   prev(){
     if(this.songs.indexOf(this.ss)-1 == -1){
       this.selectSong(this.songs.length-1)
@@ -159,6 +164,7 @@ export class PlaylistComponent implements OnInit {
       this.isBackPressed = 'unpressed';
     }, 100);
   }
+  
   updateBool(){
     this.isPlaying = !this.audio.nativeElement.paused
   }
