@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'display-time',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './time.component.css'
 })
 export class TimeComponent implements OnInit {
-  
+  @Input() showSeconds = false;
   private interval: any;
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class TimeComponent implements OnInit {
 
     let hString = '';
     let mString = '';
-    // let sString = '';
+    let sString = '';
 
     if(this.Math.floor(h/10) == 0){
       hString = '0';
@@ -42,15 +42,18 @@ export class TimeComponent implements OnInit {
     if(this.Math.floor(m/10) == 0){
       mString = '0';
     }
-    // if(this.Math.floor(s/10) == 0){
-    //   sString = '0';
-    // }
+    if(this.Math.floor(s/10) == 0){
+      sString = '0';
+    }
 
     hString += h;
     mString += m;
-    // sString += s;
+    sString += s;
 
-    // this.time = `${hString}:${mString}:${sString}`;
-    this.time = `${hString}:${mString}`;
+    if(this.showSeconds){
+      this.time = `${hString}:${mString}:${sString}`;
+    }else{
+      this.time = `${hString}:${mString}`;
+    }
   }
 }

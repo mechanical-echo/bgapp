@@ -46,6 +46,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PlaylistComponent implements OnInit {
   @Input() timeOfTheDay = 0;
+  @Input() showThemeButtons = false;
   @Output() changedTime = new EventEmitter<number>();
   @ViewChild('ap') audio!: ElementRef;
   

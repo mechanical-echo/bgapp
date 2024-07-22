@@ -11,10 +11,11 @@ import { TimeComponent } from './components/time/time.component';
 import { MaxwellComponent } from './components/maxwell/maxwell.component';
 import { WeatherComponent } from './components/weather/weather.component';
 
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, PlaylistComponent, WaveComponent, TimeComponent, MaxwellComponent, WeatherComponent],
+  imports: [RouterOutlet, CommonModule, PlaylistComponent, WaveComponent, TimeComponent, MaxwellComponent, WeatherComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [
@@ -24,6 +25,17 @@ import { WeatherComponent } from './components/weather/weather.component';
         animate('300ms cubic-bezier(.4,-0.33,.05,1.6)', style({ opacity: 1, transform: 'translateY(0)' }))
       ])
     ]),
+    trigger('buttonHover', [
+      state('out', 
+        style({ transform: 'translateX(8rem)' })
+      ),
+      state('in', 
+        style({ transform: 'translateX(0)' })
+      ),
+      transition('out <=> in', [
+        animate('300ms cubic-bezier(.4,-0.33,.05,1.6)')
+      ])
+    ])
   ]
 })
 export class AppComponent implements OnInit {
@@ -53,7 +65,10 @@ export class AppComponent implements OnInit {
   colors = colors;
   weatherIcons = weatherIcons;
   timeOfTheDay = 0;
-  
+  animState = 'out'
+  showSeconds = false;
+  showThemeButtons = false;
+
   changeTime(x: number) {
     this.timeOfTheDay = x;
     
@@ -79,5 +94,13 @@ export class AppComponent implements OnInit {
     } else {
       this.changeTime(2); // Night
     }
+  }
+
+  onEnter(){
+    this.animState = 'in'
+  }
+
+  onLeave(){
+    this.animState = 'out'
   }
 }
