@@ -1,0 +1,42 @@
+ <!-- BACK WAVE -->
+ <div class="absolute bottom-0 right-0 -z-10">
+    <svg width="956" height="440" viewBox="0 0 956 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path  d="M741 152.5C876.843 152.5 950.35 124.127 997.797 0.41011L1008.5 536.5C666.333 516.167 61.1614 519.135 4.50003 458C-33.4998 417 217.426 537.456 427 309.5C512.5 216.5 613 152.5 741 152.5Z" 
+      [attr.fill]="colors.backWave[timeOfTheDay]"
+      class="transition-colors"/>
+      </svg>
+  </div>
+  
+  <!-- FRONT WAVE -->
+  <div class="absolute bottom-0 right-0 -z-10">
+    <svg width="839" height="435" viewBox="0 0 839 435" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_d_1_7)">
+        <path d="M678 238C768.5 240 956.5 165 1007 19.5L862.5 508C696.781 506.397 424.596 488.257 231.772 476.581C176.058 507.921 114.269 502.967 12 471.5C-17.344 462.471 83.8676 467.625 231.772 476.581C258.32 461.647 283.488 438.473 311 406C372 334 501.6 234.102 678 238Z"
+        [attr.fill]="colors.frontWave[timeOfTheDay]"
+        class="transition-colors"/>
+      </g>
+      <defs>
+        <filter id="filter0_d_1_7" x="0.727429" y="0.3" width="1012.47" height="507.7" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_7" result="shape"/>
+        </filter>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- SMALL SHADOW -->
+  <div class="absolute bottom-0 right-0 -z-10">
+    <svg width="1027" height="518" viewBox="0 0 1027 518" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1080 10.5937C1029.87 170.49 909.285 205.667 794.677 205.667C651.215 205.667 550.952 273.889 459.755 373.024C236.218 616.019 -31.4274 487.616 9.10437 531.321C69.5411 596.489 715.035 593.325 1080 615L1067.73 1" 
+      [attr.stroke]="colors.shadow[timeOfTheDay]" stroke-opacity="0.14" stroke-width="10"
+      class="transition-colors"/>
+      </svg>
+  </div>
+
+  <!-- BIG SHADOW -->
+  <div class="absolute bottom-0 right-0 -z-10">
+    <svg width="1109" height="566" viewBox="0 0 1109 566" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1173 11.4219C1118.53 185.12 987.516 223.333 862.993 223.333C707.12 223.333 598.183 297.444 499.096 405.137C256.221 669.107 -34.5787 529.621 9.45945 577.098C75.1247 647.892 776.461 644.454 1173 668L1159.67 1" 
+      [attr.stroke]="colors.shadow[timeOfTheDay]" stroke-opacity="0.06" stroke-width="10"
+      class="transition-colors"/>
+      </svg>        
+  </div>
