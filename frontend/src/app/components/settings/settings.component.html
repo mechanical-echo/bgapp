@@ -1,0 +1,57 @@
+<div class="drawer drawer-end">
+    <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+
+    <div (pointerenter)="onEnter()" (pointerleave)="onLeave()" class="drawer-content absolute top-1 right-1">
+        <label [@buttonHover]="animState" for="my-drawer-4" class="drawer-button btn btn-primary h-16 tra"><i
+                class="fa-solid fa-gear text-4xl"></i></label>
+    </div>
+
+    <div class="drawer-side ">
+        <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+        <div class="menu bg-base-200 min-h-full w-80 p-4 font-['Montserrat']">
+            <h1 class="text-2xl text-center font-bold text-secondary">Settings</h1>
+            <div class="drawer-content absolute top-2 right-3">
+                <label for="my-drawer-4" class="drawer-button btn btn-primary mr-5">
+                    <i class="fa-solid fa-close text-2xl"></i>
+                </label>
+            </div>
+            <div class="divider"></div>
+
+            <div>
+                <p class="mb-2 text-lg text-center">Display seconds</p>
+                <div class="flex gap-2 justify-center bg-base-300 py-3 mx-3 rounded-md">
+                    <p>Hide</p>
+                    <input type="checkbox" class="toggle toggle-primary" (change)="changeSeconds.emit(showSeconds)"
+                        [(ngModel)]="showSeconds" checked="checked" />
+                    <p>Show</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+                <p class="mb-2 text-lg text-center">Display theme buttons</p>
+                <div class="flex gap-2 justify-center bg-base-300 py-3 mx-3 rounded-md">
+                    <p>Hide</p>
+                    <input type="checkbox" class="toggle toggle-primary"
+                        (change)="changeThemeButtons.emit(showThemeButtons)" [(ngModel)]="showThemeButtons"
+                        checked="checked" />
+                    <p>Show</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+                <p class="mb-2 text-lg text-center">Check for the daytime and change theme</p>
+                <div class="flex gap-2 justify-center bg-base-300 py-3 mx-3 rounded-md">
+                    <p>Change</p>
+                    <input type="checkbox" class="toggle toggle-primary" checked="checked" />
+                    <p>Don't</p>
+                </div>
+                <p>Next check in: {{sec}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>

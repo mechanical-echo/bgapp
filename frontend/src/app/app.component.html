@@ -28,45 +28,7 @@
 
   <maxwell [timeOfTheDay]="timeOfTheDay" />
 
-  <div class="drawer drawer-end">
-    <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
-
-    <div (pointerenter)="onEnter()" (pointerleave)="onLeave()" class="drawer-content absolute top-1 right-1">
-      <!-- Page content here -->
-      <label [@buttonHover]="animState" for="my-drawer-4" class="drawer-button btn btn-primary h-16 tra"><i
-          class="fa-solid fa-gear text-4xl"></i></label>
-    </div>
-
-    <div class="drawer-side">
-      <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-      <div class="menu bg-base-200 min-h-full w-80 p-4 font-['Montserrat']">
-        <h1 class="text-2xl text-center font-bold text-secondary">Settings</h1>
-
-        <div class="divider"></div>
-
-        <div>
-          <p class="mb-2 text-lg text-center">Display seconds</p>
-          <div class="flex gap-2 justify-center bg-base-300 py-3 mx-3 rounded-md">
-            <p>Hide</p>
-            <input type="checkbox" class="toggle toggle-primary" [(ngModel)]="showSeconds" checked="checked" />
-            <p>Show</p>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div>
-          <p class="mb-2 text-lg text-center">Display theme buttons</p>
-          <div class="flex gap-2 justify-center bg-base-300 py-3 mx-3 rounded-md">
-            <p>Hide</p>
-            <input type="checkbox" class="toggle toggle-primary" [(ngModel)]="showThemeButtons" checked="checked" />
-            <p>Show</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+  <settings (changeSeconds)="setSeconds($event)" (changeThemeButtons)="setThemeButtons($event)" />
 </div>
 
 <router-outlet />

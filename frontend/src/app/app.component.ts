@@ -10,12 +10,12 @@ import { WaveComponent } from './components/wave/wave.component';
 import { TimeComponent } from './components/time/time.component';
 import { MaxwellComponent } from './components/maxwell/maxwell.component';
 import { WeatherComponent } from './components/weather/weather.component';
-
+import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, PlaylistComponent, WaveComponent, TimeComponent, MaxwellComponent, WeatherComponent, FormsModule],
+  imports: [RouterOutlet, CommonModule, PlaylistComponent, WaveComponent, TimeComponent, MaxwellComponent, WeatherComponent, FormsModule, SettingsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [
@@ -47,11 +47,17 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     
-    this.setTimeOfDayBasedOnRealTime();
+    // this.setTimeOfDayBasedOnRealTime();
 
-    this.themeInterval = setInterval(() => {
-      this.setTimeOfDayBasedOnRealTime();
-    }, 60000);
+    // this.themeInterval = setInterval(() => {
+    //   this.setTimeOfDayBasedOnRealTime();
+    // }, 60000);
+
+    
+    this.showSeconds = localStorage.getItem('showSeconds') === 'true' ? true : false;
+
+    this.showThemeButtons = localStorage.getItem('showThemeButtons') === 'true' ? true : false;
+    
   }
 
   ngOnDestroy(): void {
@@ -66,6 +72,8 @@ export class AppComponent implements OnInit {
   weatherIcons = weatherIcons;
   timeOfTheDay = 0;
   animState = 'out'
+
+  // Settings
   showSeconds = false;
   showThemeButtons = false;
 
@@ -84,23 +92,25 @@ export class AppComponent implements OnInit {
 
   
 
-  setTimeOfDayBasedOnRealTime(): void {
-    const currentHour = new Date().getHours();
+  // setTimeOfDayBasedOnRealTime(): void {
+  //   const currentHour = new Date().getHours();
     
-    if (currentHour >= 5 && currentHour < 12) {
-      this.changeTime(0); // Morning
-    } else if (currentHour >= 12 && currentHour < 18) {
-      this.changeTime(1); // Day
-    } else {
-      this.changeTime(2); // Night
-    }
+  //   if (currentHour >= 5 && currentHour < 12) {
+  //     this.changeTime(0); // Morning
+  //   } else if (currentHour >= 12 && currentHour < 18) {
+  //     this.changeTime(1); // Day
+  //   } else {
+  //     this.changeTime(2); // Night
+  //   }
+  // }
+
+  setSeconds(b: boolean){
+    this.showSeconds = b;
+    localStorage.setItem('showSeconds', b.toString())
   }
 
-  onEnter(){
-    this.animState = 'in'
-  }
-
-  onLeave(){
-    this.animState = 'out'
+  setThemeButtons(b: boolean){
+    this.showThemeButtons = b;
+    localStorage.setItem('showThemeButtons', b.toString())
   }
 }
