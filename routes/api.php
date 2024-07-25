@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\SongController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,3 +13,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/songs/morning', [SongController::class, 'getMorning']);
 Route::get('/songs/day', [SongController::class, 'getDay']);
 Route::get('/songs/night', [SongController::class, 'getNight']);
+
+Route::post('/upload', [FileController::class, 'upload']);

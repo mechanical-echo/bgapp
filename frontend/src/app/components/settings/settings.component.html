@@ -6,9 +6,9 @@
                 class="fa-solid fa-gear text-4xl"></i></label>
     </div>
 
-    <div class="drawer-side ">
+    <div class="drawer-side">
         <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="menu bg-base-200 min-h-full w-80 p-4 font-['Montserrat']">
+        <div class="menu bg-base-200 min-h-full w-96 p-4 font-['Montserrat']">
             <h1 class="text-2xl text-center font-bold text-secondary">Settings</h1>
             <div class="drawer-content absolute top-2 right-3">
                 <label for="my-drawer-4" class="drawer-button btn btn-primary mr-5">
@@ -51,8 +51,46 @@
                     <p>Change</p>
                 </div>
                 @if(changeThemeByTime){
-                <p>Next check in: {{sec}}</p>
+                <p class="px-4 my-2">Next check in {{sec}} seconds</p>
                 }
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+                <p class="mb-2 text-lg text-center">Upload song to a playlist</p>
+                <div class="bg-base-300 py-3 mx-3 rounded-md">
+                    <h1 class="text-center my-3 text-lg">Choose a playlist</h1>
+                    <div class="flex gap-2 justify-center ">
+                        <div class="flex gap-2 mx-2 items-center">
+                            <p>Morning</p>
+                            <input type="radio" name="radio-1" class="radio radio-primary" checked="checked"
+                                value="morning" [(ngModel)]="radioTime" />
+                        </div>
+                        <div class="flex gap-2 mx-2 items-center">
+                            <p>Day</p>
+                            <input type="radio" name="radio-1" class="radio radio-primary" value="day"
+                                [(ngModel)]="radioTime" />
+                        </div>
+                        <div class="flex gap-2 mx-2 items-center">
+                            <p>Night</p>
+                            <input type="radio" name="radio-1" class="radio radio-primary" value="night"
+                                [(ngModel)]="radioTime" />
+                        </div>
+                    </div>
+
+                    <div class="divider mx-5"></div>
+
+                    <h1 class="text-center mb-3 text-lg">Choose a song</h1>
+                    <div class="flex justify-center">
+                        <input (change)="onFileSelected($event)" type="file"
+                            class="file-input file-input-bordered  max-w-[18rem]" />
+                    </div>
+
+                    <div class="flex justify-center mt-5 mb-3">
+                        <button (click)="onUpload()" class="btn btn-primary min-w-36">Submit</button>
+                    </div>
+                </div>
             </div>
 
         </div>

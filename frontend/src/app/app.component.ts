@@ -109,4 +109,22 @@ export class AppComponent implements OnInit {
     this.showThemeButtons = b;
     localStorage.setItem('showThemeButtons', b.toString())
   }
+
+  updateSongs(){
+    forkJoin({
+      morning: this.songService.getSongs('morning'),
+      day: this.songService.getSongs('day'),
+      night: this.songService.getSongs('night')
+    }).subscribe({
+      next: (result) => {
+        this.morningPlaylist = result.morning;
+        this.dayPlaylist = result.day;
+        this.nightPlaylist = result.night;
+  
+        this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist];
+        this.songs = this.allPlaylists[this.timeOfTheDay];
+      },
+      error: (error) => console.error('Error fetching songs:', error)
+    });
+  }
 }

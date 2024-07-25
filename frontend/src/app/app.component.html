@@ -29,7 +29,7 @@
 
   <maxwell [timeOfTheDay]="timeOfTheDay" />
 
-  <settings (changeTheme)="changeTime($event)" (changeSeconds)="setSeconds($event)"
+  <settings (updateSongs)="updateSongs()" (changeTheme)="changeTime($event)" (changeSeconds)="setSeconds($event)"
     (changeThemeButtons)="setThemeButtons($event)" />
 </div>
 

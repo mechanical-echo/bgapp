@@ -2,6 +2,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'settings',
   standalone: true,
@@ -25,7 +27,10 @@ export class SettingsComponent implements OnInit {
   @Output() changeSeconds = new EventEmitter<boolean>();
   @Output() changeThemeButtons = new EventEmitter<boolean>();
   @Output() changeTheme = new EventEmitter<number>();
-  
+  @Output() updateSongs = new EventEmitter<any>();
+
+  constructor(private http: HttpClient){}
+
   ngOnInit(): void {
     this.showSeconds = localStorage.getItem('showSeconds') === 'true' ? true : false;
     this.showThemeButtons = localStorage.getItem('showThemeButtons') === 'true' ? true : false;
@@ -48,6 +53,7 @@ export class SettingsComponent implements OnInit {
     }, 1000)
   }
 
+  selectedFile: File | null = null;
   themeInterval: any;
   secondsInterval: any;
   sec = 60;
@@ -81,4 +87,24 @@ export class SettingsComponent implements OnInit {
       this.changeTheme.emit(2); // Night
     }
   }
+
+  radioTime = 'morning';
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  onUpload() {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+      formData.append('playlist', this.radioTime)
+
+      this.http.post('http://localhost:4564/api/upload', formData).subscribe(
+        response => this.updateSongs.emit(),
+        error => console.error('Upload failed', error)
+      );
+    }
+  }
+
 }
