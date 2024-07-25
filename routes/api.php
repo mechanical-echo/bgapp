@@ -9,4 +9,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/songs', [SongController::class, 'index']);
+Route::get('/songs/morning', [SongController::class, 'getMorning']);
+Route::get('/songs/day', [SongController::class, 'getDay']);
+Route::get('/songs/night', [SongController::class, 'getNight']);

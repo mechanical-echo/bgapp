@@ -7,10 +7,26 @@ use getID3;
 
 class SongController extends Controller
 {
-    public function index()
+    public function getMorning()
     {
-        $path = base_path('frontend/public/music/day');
-        
+        $path = base_path('frontend/public/music/morning');   
+        return $this->getSongs($path);
+    }
+
+    public function getDay()
+    {
+        $path = base_path('frontend/public/music/day');   
+        return $this->getSongs($path);
+    }
+
+    public function getNight()
+    {
+        $path = base_path('frontend/public/music/night');   
+        return $this->getSongs($path);
+    }
+
+    public function getSongs(string $path){
+
         $files = File::files($path);
         
         $songs = [];
@@ -40,7 +56,7 @@ class SongController extends Controller
                 ];
             }
         }
-        
+
         return response()->json($songs);
     }
 }

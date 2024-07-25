@@ -82,7 +82,7 @@
     <div>
       <audio #ap controls class="hidden" (ended)="next()" (change)="updateBool()">
         @if (ss) {
-        <source [src]="'music/day/' + ss?.filename + '.mp3'" type="audio/mpeg">
+        <source [src]="'music/'+timeNames[timeOfTheDay]+'/' + ss?.filename + '.mp3'" type="audio/mpeg">
         }
       </audio>
       <div class="flex gap-2 justify-center items-center mt-3">

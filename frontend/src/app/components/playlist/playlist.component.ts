@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, 
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { SongService } from '../../services/songs.service';
 import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'playlist',
   standalone: true,
@@ -58,17 +59,35 @@ export class PlaylistComponent implements OnInit {
   isBackPressed = 'unpressed';
   
   songs: any[] = [];
+  
+  morningPlaylist: any[] = [];
+  dayPlaylist: any[] = [];
+  nightPlaylist: any[] = [];
+
   isPlaying = false;
   
   ssSliderPoint = 0;
   ssDuration = 0;
   ss?: any;
+  timeNames = ['morning', 'day', 'night']
+  allPlaylists: any[] = [];
 
   ngOnInit(): void {
-    this.songService.getSongs().subscribe(
-      songs => this.songs = songs,
-      error => console.error('Error fetching songs:', error)
-    );
+    forkJoin({
+      morning: this.songService.getSongs('morning'),
+      day: this.songService.getSongs('day'),
+      night: this.songService.getSongs('night')
+    }).subscribe({
+      next: (result) => {
+        this.morningPlaylist = result.morning;
+        this.dayPlaylist = result.day;
+        this.nightPlaylist = result.night;
+  
+        this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist];
+        this.songs = this.allPlaylists[this.timeOfTheDay];
+      },
+      error: (error) => console.error('Error fetching songs:', error)
+    });
   }
 
   ngAfterViewInit() {
@@ -87,7 +106,10 @@ export class PlaylistComponent implements OnInit {
     if (themeRadios[x]) {
       themeRadios[x].checked = true;
     }
-    
+
+    this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist]
+    this.songs = this.allPlaylists[x];
+
     const theme = ['morningTheme', 'dayTheme', 'nightTheme'][x];
     document.documentElement.setAttribute('data-theme', theme);
 
