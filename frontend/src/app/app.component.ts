@@ -12,6 +12,8 @@ import { MaxwellComponent } from './components/maxwell/maxwell.component';
 import { WeatherComponent } from './components/weather/weather.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule } from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { SongService } from './services/songs.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -41,13 +43,28 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent implements OnInit {
 
   Math = Math;  
-  constructor (private http: HttpClient) {}
+  constructor (private songService: SongService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.showSeconds = localStorage.getItem('showSeconds') === 'true' ? true : false;
 
     this.showThemeButtons = localStorage.getItem('showThemeButtons') === 'true' ? true : false;
     
+    forkJoin({
+      morning: this.songService.getSongs('morning'),
+      day: this.songService.getSongs('day'),
+      night: this.songService.getSongs('night')
+    }).subscribe({
+      next: (result) => {
+        this.morningPlaylist = result.morning;
+        this.dayPlaylist = result.day;
+        this.nightPlaylist = result.night;
+  
+        this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist];
+        this.songs = this.allPlaylists[this.timeOfTheDay];
+      },
+      error: (error) => console.error('Error fetching songs:', error)
+    });
   }
 
   titleArr = titleArr;
@@ -56,6 +73,12 @@ export class AppComponent implements OnInit {
   weatherIcons = weatherIcons;
   timeOfTheDay = 0;
   animState = 'out'
+
+  allPlaylists: any[] = [];
+  morningPlaylist: any[] = [];
+  dayPlaylist: any[] = [];
+  nightPlaylist: any[] = [];
+  songs: any[] = [];
 
   // Settings
   showSeconds = false;
@@ -69,6 +92,9 @@ export class AppComponent implements OnInit {
     if (themeRadios[x]) {
       themeRadios[x].checked = true;
     }
+
+    this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist]
+    this.songs = this.allPlaylists[x];
     
     const theme = ['morningTheme', 'dayTheme', 'nightTheme'][x];
     document.documentElement.setAttribute('data-theme', theme);

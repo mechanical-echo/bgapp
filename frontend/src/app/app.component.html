@@ -20,7 +20,8 @@
 
   </div>
 
-  <playlist [showThemeButtons]="showThemeButtons" [timeOfTheDay]="timeOfTheDay" (changedTime)="changeTime($event)" />
+  <playlist [songs]="songs" [showThemeButtons]="showThemeButtons" [timeOfTheDay]="timeOfTheDay"
+    (changedTime)="changeTime($event)" />
 
   <wave class="-z-10" [timeOfTheDay]="timeOfTheDay" />
 

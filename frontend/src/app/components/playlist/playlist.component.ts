@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, input, Input, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { SongService } from '../../services/songs.service';
 import { CommonModule } from '@angular/common';
@@ -48,6 +48,7 @@ import { forkJoin } from 'rxjs';
 export class PlaylistComponent implements OnInit {
   @Input() timeOfTheDay = 0;
   @Input() showThemeButtons = false;
+  @Input() songs: any[] = [];
   @Output() changedTime = new EventEmitter<number>();
   @ViewChild('ap') audio!: ElementRef;
   
@@ -58,11 +59,8 @@ export class PlaylistComponent implements OnInit {
   isNextPressed = 'unpressed';
   isBackPressed = 'unpressed';
   
-  songs: any[] = [];
   
-  morningPlaylist: any[] = [];
-  dayPlaylist: any[] = [];
-  nightPlaylist: any[] = [];
+
 
   isPlaying = false;
   
@@ -70,24 +68,10 @@ export class PlaylistComponent implements OnInit {
   ssDuration = 0;
   ss?: any;
   timeNames = ['morning', 'day', 'night']
-  allPlaylists: any[] = [];
+
 
   ngOnInit(): void {
-    forkJoin({
-      morning: this.songService.getSongs('morning'),
-      day: this.songService.getSongs('day'),
-      night: this.songService.getSongs('night')
-    }).subscribe({
-      next: (result) => {
-        this.morningPlaylist = result.morning;
-        this.dayPlaylist = result.day;
-        this.nightPlaylist = result.night;
-  
-        this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist];
-        this.songs = this.allPlaylists[this.timeOfTheDay];
-      },
-      error: (error) => console.error('Error fetching songs:', error)
-    });
+    
   }
 
   ngAfterViewInit() {
@@ -107,8 +91,6 @@ export class PlaylistComponent implements OnInit {
       themeRadios[x].checked = true;
     }
 
-    this.allPlaylists = [this.morningPlaylist, this.dayPlaylist, this.nightPlaylist]
-    this.songs = this.allPlaylists[x];
 
     const theme = ['morningTheme', 'dayTheme', 'nightTheme'][x];
     document.documentElement.setAttribute('data-theme', theme);
