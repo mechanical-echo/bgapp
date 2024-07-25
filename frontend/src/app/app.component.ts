@@ -43,27 +43,11 @@ export class AppComponent implements OnInit {
   Math = Math;  
   constructor (private http: HttpClient) {}
 
-  private themeInterval: any;
-  
   ngOnInit(): void {
-    
-    // this.setTimeOfDayBasedOnRealTime();
-
-    // this.themeInterval = setInterval(() => {
-    //   this.setTimeOfDayBasedOnRealTime();
-    // }, 60000);
-
-    
     this.showSeconds = localStorage.getItem('showSeconds') === 'true' ? true : false;
 
     this.showThemeButtons = localStorage.getItem('showThemeButtons') === 'true' ? true : false;
     
-  }
-
-  ngOnDestroy(): void {
-    if (this.themeInterval) {
-      clearInterval(this.themeInterval);
-    }
   }
 
   titleArr = titleArr;
@@ -89,20 +73,6 @@ export class AppComponent implements OnInit {
     const theme = ['morningTheme', 'dayTheme', 'nightTheme'][x];
     document.documentElement.setAttribute('data-theme', theme);
   }
-
-  
-
-  // setTimeOfDayBasedOnRealTime(): void {
-  //   const currentHour = new Date().getHours();
-    
-  //   if (currentHour >= 5 && currentHour < 12) {
-  //     this.changeTime(0); // Morning
-  //   } else if (currentHour >= 12 && currentHour < 18) {
-  //     this.changeTime(1); // Day
-  //   } else {
-  //     this.changeTime(2); // Night
-  //   }
-  // }
 
   setSeconds(b: boolean){
     this.showSeconds = b;

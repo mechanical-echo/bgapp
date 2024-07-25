@@ -28,7 +28,8 @@
 
   <maxwell [timeOfTheDay]="timeOfTheDay" />
 
-  <settings (changeSeconds)="setSeconds($event)" (changeThemeButtons)="setThemeButtons($event)" />
+  <settings (changeTheme)="changeTime($event)" (changeSeconds)="setSeconds($event)"
+    (changeThemeButtons)="setThemeButtons($event)" />
 </div>
 
 <router-outlet />

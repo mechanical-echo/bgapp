@@ -24,15 +24,19 @@ import { Output, EventEmitter } from '@angular/core';
 export class SettingsComponent implements OnInit {
   @Output() changeSeconds = new EventEmitter<boolean>();
   @Output() changeThemeButtons = new EventEmitter<boolean>();
-
+  @Output() changeTheme = new EventEmitter<number>();
+  
   ngOnInit(): void {
     this.showSeconds = localStorage.getItem('showSeconds') === 'true' ? true : false;
     this.showThemeButtons = localStorage.getItem('showThemeButtons') === 'true' ? true : false;
-    
+    this.changeThemeByTime = localStorage.getItem('changeThemeByTime') === 'true' ? true : false;
+
     this.setTimeOfDayBasedOnRealTime();
     
     this.themeInterval = setInterval(() => {
-      this.setTimeOfDayBasedOnRealTime();
+      if(this.changeThemeByTime){
+        this.setTimeOfDayBasedOnRealTime();
+      }
     }, 60000);
 
     this.secondsInterval = setInterval(() => {
@@ -50,6 +54,8 @@ export class SettingsComponent implements OnInit {
 
   showSeconds = false;
   showThemeButtons = false;
+  changeThemeByTime = false;
+
   animState = 'out'
 
   onEnter(){
@@ -60,22 +66,19 @@ export class SettingsComponent implements OnInit {
     this.animState = 'out'
   }
 
-  changeTime(x: number) {
-    const theme = ['morningTheme', 'dayTheme', 'nightTheme'][x];
-    document.documentElement.setAttribute('data-theme', theme);
+  onThemeSettingToggle() {
+    localStorage.setItem('changeThemeByTime', this.changeThemeByTime.toString());
   }
-
-  
 
   setTimeOfDayBasedOnRealTime(): void {
     const currentHour = new Date().getHours();
     
     if (currentHour >= 5 && currentHour < 12) {
-      this.changeTime(0); // Morning
+      this.changeTheme.emit(0); // Morning
     } else if (currentHour >= 12 && currentHour < 18) {
-      this.changeTime(1); // Day
+      this.changeTheme.emit(1); // Day
     } else {
-      this.changeTime(2); // Night
+      this.changeTheme.emit(2); // Night
     }
   }
 }
