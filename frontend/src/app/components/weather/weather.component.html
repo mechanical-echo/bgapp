@@ -1,53 +1,61 @@
 @if (weather) {
 
-<div (click)="onWeatherPress()" [@pressAnimation]="isPressedState"
-    class="absolute bottom-8 right-16 flex gap-2 items-center pt-2">
+<div
+  (click)="onWeatherPress()"
+  [@pressAnimation]="isPressedState"
+  class="absolute bottom-8 right-16 flex gap-2 items-center pt-2 mb-10"
+>
+  <!-- Temperature -->
+  <div data-tip="Click to update weather" class="tooltip tooltip-primary">
+    <h1
+      class="cursor-pointer font-['Inknut_Antiqua'] text-8xl text-primary font-bold"
+    >
+      {{ Math.round(weather.current.temp_c) }}°
+    </h1>
+  </div>
 
-    <!-- Temperature -->
-    <div data-tip="Click to update weather" class="tooltip tooltip-primary">
-        <h1 class="cursor-pointer font-['Inknut_Antiqua'] text-8xl text-primary font-bold">
-            {{ Math.round(weather.current.temp_c) }}°
-        </h1>
+  <!-- Weather icon -->
+  <div class="dropdown dropdown-hover dropdown-top dropdown-end">
+    <!-- Icon -->
+    <div tabindex="0">
+      <i
+        class="text-8xl fa-solid text-primary"
+        [ngClass]="weatherIcons[weather.current.condition.code]"
+      ></i>
     </div>
 
-    <!-- Weather icon -->
-    <div class="dropdown dropdown-hover dropdown-top dropdown-end">
+    <!-- Menu -->
+    <ul
+      tabindex="0"
+      class="font-['Montserrat'] flex flex-col gap-1 py-5 px-3 dropdown-content bg-base-100 rounded-box w-64 p-2 shadow mb-3"
+    >
+      <!-- Location -->
+      <li class="font-bold">
+        {{ weather.location.name }}, {{ weather.location.country }}
+      </li>
 
-        <!-- Icon -->
-        <div tabindex="0">
-            <i class="text-8xl fa-solid text-primary" [ngClass]="weatherIcons[weather.current.condition.code]"></i>
-        </div>
+      <!-- Condition name -->
+      <li class="flex items-center justify-between border-b-2 border-gray-200">
+        <p>{{ weather.current.condition.text }}</p>
+        <img class="w-8" [src]="weather.current.condition.icon" alt="" />
+      </li>
 
-        <!-- Menu -->
-        <ul tabindex="0"
-            class="font-['Montserrat'] flex flex-col gap-1 py-5 px-3 dropdown-content bg-base-100 rounded-box w-64 p-2 shadow mb-3">
+      <!-- Humidity level -->
+      <li
+        class="mt-1 flex items-center justify-between border-b-2 border-gray-200"
+      >
+        <p>Humidity:</p>
+        <p>{{ weather.current.humidity }}%</p>
+      </li>
 
-            <!-- Location -->
-            <li class="font-bold">
-                {{ weather.location.name }}, {{ weather.location.country }}
-            </li>
-
-            <!-- Condition name -->
-            <li class="flex items-center justify-between border-b-2 border-gray-200">
-                <p>{{ weather.current.condition.text }}</p>
-                <img class="w-8" [src]="weather.current.condition.icon" alt="" />
-            </li>
-
-            <!-- Humidity level -->
-            <li class="mt-1 flex items-center justify-between border-b-2 border-gray-200">
-                <p>Humidity:</p>
-                <p>{{ weather.current.humidity }}%</p>
-            </li>
-
-            <!-- Last update from the API -->
-            <li class="mt-1 flex items-center justify-between border-b-2 border-gray-200">
-                <p>Updated:</p>
-                <p>{{ weather.current.last_updated }}</p>
-            </li>
-
-        </ul>
-
-    </div>
-
+      <!-- Last update from the API -->
+      <li
+        class="mt-1 flex items-center justify-between border-b-2 border-gray-200"
+      >
+        <p>Updated:</p>
+        <p>{{ weather.current.last_updated }}</p>
+      </li>
+    </ul>
+  </div>
 </div>
 }

@@ -1,17 +1,22 @@
 <!-- Playlist menu -->
 <div
-  class="absolute bg-base-200 shadow-2xl hover:drop-shadow-2xl transition-all rounded-badge right-36 w-[35rem] h-[48rem] top-[-5rem] pt-20 pb-16 z-0">
+  class="absolute bg-base-200 shadow-2xl hover:drop-shadow-2xl transition-all rounded-badge right-36 w-[35rem] h-[48rem] top-[-5rem] pt-20 pb-16 z-0"
+>
   <div class="py-7 h-full">
-
     <!-- top row -->
     @if (showThemeButtons) {
-    <div class="flex justify-between text-center font-['Inknut_Antiqua'] text-2xl font-bold text-neutral px-16">
+    <div
+      class="flex justify-between text-center font-['Inknut_Antiqua'] text-2xl font-bold text-neutral px-16"
+    >
       <div (click)="changeTime(0)" class="form-control w-fit">
         <label class="label cursor-pointer w-fit">
           <span
             class="hover:text-secondary text-2xl font-bold text-neutral transition-colors active:text-accent pb-2 border-secondary border-b-4 label-text"
-            [class.text-secondary]="timeOfTheDay == 0" [class.text-neutral]="timeOfTheDay != 0"
-            [class.border-none]="timeOfTheDay != 0" [class.border-b-4]="timeOfTheDay == 0">
+            [class.text-secondary]="timeOfTheDay == 0"
+            [class.text-neutral]="timeOfTheDay != 0"
+            [class.border-none]="timeOfTheDay != 0"
+            [class.border-b-4]="timeOfTheDay == 0"
+          >
             wake up
           </span>
           <!-- <input type="radio" name="theme-radios" class="hidden radio theme-controller" value="morningTheme" /> -->
@@ -22,8 +27,11 @@
         <label class="label cursor-pointer w-fit">
           <span
             class="hover:text-secondary mr-7 text-2xl font-bold text-neutral text-secondary transition-colors active:text-accent pb-2 border-secondary border-b-4 label-text"
-            [class.text-neutral]="timeOfTheDay != 1" [class.text-secondary]="timeOfTheDay == 1"
-            [class.border-none]="timeOfTheDay != 1" [class.border-b-4]="timeOfTheDay == 1">
+            [class.text-neutral]="timeOfTheDay != 1"
+            [class.text-secondary]="timeOfTheDay == 1"
+            [class.border-none]="timeOfTheDay != 1"
+            [class.border-b-4]="timeOfTheDay == 1"
+          >
             grind
           </span>
           <!-- <input type="radio" name="theme-radios" class="hidden radio theme-controller" value="dayTheme" /> -->
@@ -34,35 +42,44 @@
         <label class="label cursor-pointer w-fit">
           <span
             class="hover:text-secondary text-2xl font-bold text-neutral transition-colors active:text-accent pb-2 border-secondary border-b-4 label-text"
-            [class.text-secondary]="timeOfTheDay == 2" [class.text-neutral]="timeOfTheDay != 2"
-            [class.border-none]="timeOfTheDay != 2" [class.border-b-4]="timeOfTheDay == 2">
+            [class.text-secondary]="timeOfTheDay == 2"
+            [class.text-neutral]="timeOfTheDay != 2"
+            [class.border-none]="timeOfTheDay != 2"
+            [class.border-b-4]="timeOfTheDay == 2"
+          >
             relax
           </span>
           <!-- <input type="radio" name="theme-radios" class="hidden radio theme-controller" value="nightTheme" /> -->
         </label>
       </div>
-
     </div>
 
     }
 
     <!-- playlist -->
     <div class="overflow-y-auto h-[75%] w-full">
-      <div class="bg-base-300 min-h-full rounded-3xl py-5 flex flex-col gap-2 mx-12 px-2">
-
+      <div
+        class="bg-base-300 min-h-full rounded-3xl py-5 flex flex-col gap-2 mx-12 px-2"
+      >
         @for (song of songs; track $index) {
 
-
-        <div (click)="selectSong($index)" [ngClass]="{
-              'font-[\'Montserrat\'] bg-base-200 p-5 rounded-xl shadow-md border-8 flex gap-3 transition-all hover:shadow-xl cursor-pointer z-50': true,
-              'border-base-300 hover:-translate-x-10': !song.selected,
-              '-translate-x-12 border-info': song.selected
-            }">
-
-
+        <div
+          (click)="selectSong($index)"
+          [ngClass]="{
+            'font-[\'Montserrat\'] bg-base-200 p-5 rounded-xl shadow-md border-8 flex gap-3 transition-all hover:shadow-xl cursor-pointer z-50': true,
+            'border-base-300 hover:-translate-x-10': !song.selected,
+            '-translate-x-12 border-info': song.selected
+          }"
+        >
           <!-- image -->
           @if (song.coverArt) {
-          <img [src]="song.coverArt" alt="Album cover" width="60" height="60" class="rounded-md">
+          <img
+            [src]="song.coverArt"
+            alt="Album cover"
+            width="60"
+            height="60"
+            class="rounded-md"
+          />
           }
 
           <div class="mt-1">
@@ -71,39 +88,65 @@
             <!-- Song author -->
             <h1 class="text-neutral">{{ song.artist }}</h1>
           </div>
-
         </div>
         }
       </div>
-
     </div>
 
     <!-- audio controlls -->
     <div>
-      <audio #ap controls class="hidden" (ended)="next()" (change)="updateBool()">
+      <audio
+        #ap
+        controls
+        class="hidden"
+        (ended)="next()"
+        (change)="updateBool()"
+      >
         @if (ss) {
-        <source [src]="'music/'+timeNames[timeOfTheDay]+'/' + ss?.filename + '.mp3'" type="audio/mpeg">
+        <source
+          [src]="
+            'music/' + timeNames[timeOfTheDay] + '/' + ss?.filename + '.mp3'
+          "
+          type="audio/mpeg"
+        />
         }
       </audio>
       <div class="flex gap-2 justify-center items-center mt-3">
-
-        <button [@pressBack]="isBackPressed" (click)="prev()" class="btn btn-secondary text-primary"><i
-            class="fa-solid fa-backward"></i></button>
-        <button [@pressPlay]="isPlayPressed" (click)="play()"
-          class="rounded-full bg-base-300 text-5xl w-28 h-28 transition-all hover:bg-gray-300 text-primary">
+        <button
+          [@pressBack]="isBackPressed"
+          (click)="prev()"
+          class="btn btn-secondary text-primary"
+        >
+          <i class="fa-solid fa-backward"></i>
+        </button>
+        <button
+          [@pressPlay]="isPlayPressed"
+          (click)="play()"
+          class="rounded-full bg-base-300 text-5xl w-28 h-28 transition-all hover:bg-gray-300 text-primary"
+        >
           @if (!isPlaying) {
           <i class="fa-solid fa-play pl-2"></i>
           } @else{
           <i class="fa-solid fa-pause"></i>
           }
         </button>
-        <button [@pressNext]="isNextPressed" (click)="next()" class="btn btn-secondary text-primary"><i
-            class="fa-solid fa-forward"></i></button>
-
+        <button
+          [@pressNext]="isNextPressed"
+          (click)="next()"
+          class="btn btn-secondary text-primary"
+        >
+          <i class="fa-solid fa-forward"></i>
+        </button>
       </div>
       <div class="px-16 mt-3">
-        <input type="range" min="0" [max]="ss?.duration" [value]="ssSliderPoint" (input)="seekAudio($event)"
-          class="range range-info range-xs" />
+        <input
+          type="range"
+          min="0"
+          [max]="ss?.duration"
+          [value]="ssSliderPoint"
+          (input)="seekAudio($event)"
+          class="range range-info range-xs"
+        />
       </div>
     </div>
   </div>
